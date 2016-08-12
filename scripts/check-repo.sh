@@ -1,6 +1,14 @@
 #!/bin/sh
 
 PROJECT_NAME=$(echo $1 | rev | cut -d'/' -f1 | rev)
+
+if [ -f /opt/$PROJECT_NAME.lock ]; then
+    echo "--> Already updating $PROJECT_NAME. Exiting.."
+    exit 0
+fi
+
+touch /opt/$PROJECT_NAME.lock
+
 echo "--> Project: $PROJECT_NAME"
 
 # Check remote
@@ -37,10 +45,9 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
     fi
 
     if [ "$LOCAL_COMMIT" != "" ]; then
-        echo "--> Deleting old files"
-        rm -r /opt/$PROJECT_NAME
+        mv /opt/$PROJECT_NAME /opt/$PROJECT_NAME-old
     fi
-    
+
     mv /opt/$PROJECT_NAME-tmp /opt/$PROJECT_NAME
 
     # Dont automate running, before we have a way of shutting down existing
@@ -49,6 +56,13 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
         ./run.sh > /opt/$PROJECT_NAME.pid
     fi
 
+    if [ "$LOCAL_COMMIT" != "" ]; then
+        echo "--> Deleting old files"
+        rm -r /opt/$PROJECT_NAME-old
+    fi
+
     echo "--> Updating current_build"
     echo $COMMIT_ID > /opt/$PROJECT_NAME.current_build
 fi
+
+rm /opt/$PROJECT_NAME.lock
