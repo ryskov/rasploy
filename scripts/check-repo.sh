@@ -24,10 +24,7 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
     echo "--> Cloning new files"
     git clone -b deploy $1 /opt/$PROJECT_NAME-tmp
 
-    echo "--> Updating current_build"
-    echo $COMMIT_ID > /opt/$PROJECT_NAME.current_build
-
-    cd /opt/$PROJECT_NAME/
+    cd /opt/$PROJECT_NAME-tmp/
     if [ -f /opt/$PROJECT_NAME/setup.sh ]; then
         chmod +x setup.sh
         ./setup.sh
@@ -51,4 +48,7 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
         ./run.sh &
         echo $! > /opt/$PROJECT_NAME.pid
     fi
+
+    echo "--> Updating current_build"
+    echo $COMMIT_ID > /opt/$PROJECT_NAME.current_build
 fi
