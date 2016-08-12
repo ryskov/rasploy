@@ -38,9 +38,9 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
     if [ "$LOCAL_COMMIT" != "" ]; then
         echo "--> Deleting old files"
         rm -r /opt/$PROJECT_NAME
-
-        mv /opt/$PROJECT_NAME-tmp /opt/$PROJECT_NAME
     fi
+    
+    mv /opt/$PROJECT_NAME-tmp /opt/$PROJECT_NAME
 
     # Dont automate running, before we have a way of shutting down existing
     if [ -f /opt/$PROJECT_NAME/run.sh ]; then
