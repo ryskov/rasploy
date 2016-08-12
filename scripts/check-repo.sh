@@ -37,7 +37,7 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
         ./setup.sh
     fi
 
-    Dont automate running, before we have a way of shutting down existing
+    # Dont automate running, before we have a way of shutting down existing
     if [ -f /opt/$PROJECT_NAME/run.sh ]; then
         chmod +x run.sh
         ./run.sh &
