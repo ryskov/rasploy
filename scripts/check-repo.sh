@@ -25,7 +25,8 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
     git clone -b deploy $1 /opt/$PROJECT_NAME-tmp
 
     cd /opt/$PROJECT_NAME-tmp/
-    if [ -f /opt/$PROJECT_NAME/setup.sh ]; then
+
+    if [ -f /opt/$PROJECT_NAME-tmp/setup.sh ]; then
         chmod +x setup.sh
         ./setup.sh
     fi
