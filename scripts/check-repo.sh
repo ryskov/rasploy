@@ -20,13 +20,9 @@ fi
 
 if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
     echo "--> Not in sync, will clone"
-    if [ "$LOCAL_COMMIT" != "" ]; then
-        echo "--> Deleting old files"
-        rm -r /opt/$PROJECT_NAME
-    fi
-
+    
     echo "--> Cloning new files"
-    git clone -b deploy $1 /opt/$PROJECT_NAME
+    git clone -b deploy $1 /opt/$PROJECT_NAME-tmp
 
     echo "--> Updating current_build"
     echo $COMMIT_ID > /opt/$PROJECT_NAME.current_build
@@ -37,10 +33,22 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
         ./setup.sh
     fi
 
+    if [ -f /opt/$PROJECT_NAME.pid ]; then
+        CURRENT_PID=$(cat /opt/$PROJECT_NAME.pid)
+        kill $CURRENT_PID
+    fi
+
+    if [ "$LOCAL_COMMIT" != "" ]; then
+        echo "--> Deleting old files"
+        rm -r /opt/$PROJECT_NAME
+
+        mv /opt/$PROJECT_NAME-tmp /opt/$PROJECT_NAME
+    fi
+
     # Dont automate running, before we have a way of shutting down existing
     if [ -f /opt/$PROJECT_NAME/run.sh ]; then
         chmod +x run.sh
-        ./run.sh
+        ./run.sh &
         echo $! > /opt/$PROJECT_NAME.pid
     fi
 fi
