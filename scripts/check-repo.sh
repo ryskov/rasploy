@@ -46,7 +46,7 @@ if [ "$LOCAL_COMMIT" != "$COMMIT_ID" ]; then
     # Dont automate running, before we have a way of shutting down existing
     if [ -f /opt/$PROJECT_NAME/run.sh ]; then
         chmod +x run.sh
-        ./run.sh &
+        ./run.sh
         echo $! > /opt/$PROJECT_NAME.pid
     fi
 
