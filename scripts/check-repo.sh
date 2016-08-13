@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 PROJECT_NAME=$(echo $1 | rev | cut -d'/' -f1 | rev)
 
