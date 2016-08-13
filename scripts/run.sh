@@ -7,7 +7,7 @@ cd $DIR
 chmod +x check-repo.sh
 
 if [ -z "$1" ]; then
-    if [ -f /etc/projects ]: then
+    if [ -f /etc/projects ]; then
         echo "--> Using /etc/projects"
         while read project; do
             ./check-repo.sh $project        
