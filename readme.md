@@ -10,7 +10,7 @@ sudo crontab -e
 ```
 add the following cron job
 ```
-* * * * * chmod +x [PATH_TO_RASPLOY]/scripts/check-repo.sh && PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games /bin/bash [PATH_TO_RASPLOY]/scripts/run.sh >> /var/log/rasploy.log
+* * * * * chmod +x [PATH_TO_RASPLOY]/scripts/run.sh && PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games /bin/bash [PATH_TO_RASPLOY]/scripts/run.sh >> /var/log/rasploy.log
 ```
 Remember to change the [PATH_TO_RASPLOY] to the path of where this repository was cloned. 
 
